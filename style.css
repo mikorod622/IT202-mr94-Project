@@ -1,6 +1,6 @@
 * {
     font-family: sans-serif;
-    color: blanchedalmond;
+    color: rgb(155, 130, 93);
 }
 body {
     background-color: cornflowerblue;
@@ -87,4 +87,7 @@ input {
 #labeled {
     text-align: left;
     margin-left: 30vw;
+}
+#choose {
+    color: #1d1d1d;
 }
