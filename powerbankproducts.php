@@ -1,7 +1,7 @@
 <?php
 // TODO use database_local.php OR database_njit.php
 require_once('database_local.php');
-
+$db = getDB();
 // Get category ID
 $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
 if ($category_id == NULL || $category_id == FALSE) {
@@ -51,12 +51,26 @@ $statement3->closeCursor();
         <!-- header -->
         <header>
             <img id="logo" src="images/logo.png"><h3>Portable Power Bank Central</h3>
-            <ul class="menu">
-                <a href="powerbankhome.html">Home</a>
+            <nav class="menu">
+                <a href="powerbankhome.php">Home</a>
                 <a href="powerbankproducts.php">Products</a>
-                <a href="powerbankship.html">Shipping</a>
+                <?php 
+                    if (isset($_SESSION['is_valid_admin'])==false){
+                        session_start();
+                    }
+                    if (isset($_SESSION['is_valid_admin'])) { 
+                ?>
+                <a href="powerbankshipper.php">Shipping</a>
                 <a href="powerbankSql.php">Create</a>
-            </ul>
+                <p>
+                    <a href="logout.php">Logout</a>
+                </p>
+                <?php } else { ?>
+                <p>
+                    <a href="login.php">Login</a>
+                </p>
+                <?php } ?>              
+            </nav>
         </header>
         <!-- main elements -->
         <main>
@@ -100,7 +114,13 @@ $statement3->closeCursor();
               value="<?php echo $product['powerBankID']; ?>" />
             <input type="hidden" name="category_id"
               value="<?php echo $product['powerBankCategoryID']; ?>" />
-            <input type="submit" value="Delete" />
+            <?php 
+                  if (isset($_SESSION['is_valid_admin'])) { 
+            ?>
+            <p>
+                <input type="submit" value="Delete" />
+            </p>
+            <?php }?>
           </form>
         </td>
       </tr>

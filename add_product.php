@@ -10,6 +10,7 @@ $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
 $code = filter_input(INPUT_POST, 'code');
 $name = filter_input(INPUT_POST, 'name');
 $desc = filter_input(INPUT_POST, 'desc');
+$mah = filter_input(INPUT_POST, 'mah');
 $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
 
 
@@ -34,6 +35,11 @@ elseif ($desc == NULL)
   $error = "Invalid description. Check all fields and try again.";
   echo "$error <br>";
 }
+elseif ($mah == NULL || $mah == FALSE)
+{
+    $error = "Invalid mah. Check all fields and try again.";
+    echo "$error <br>";
+}
 elseif ($price == NULL || $price == FALSE)
 {
     $error = "Invalid price. Check all fields and try again.";
@@ -42,6 +48,7 @@ elseif ($price == NULL || $price == FALSE)
     // Change to database_local.php or database_njit.php
     require_once('database_local.php');
     // Add the product to the database  
+    $db = getDB();
     $queryProducts = 'SELECT * FROM powerBank
           WHERE powerBankcategoryID = :category_id
           ORDER BY powerBankID';
@@ -59,16 +66,17 @@ elseif ($price == NULL || $price == FALSE)
       }
     }
 
-    $query = 'INSERT INTO powerbank 
-                  (`powerBankCategoryID`, `powerBankCode`, `powerBankName`, `description`, `price`, `dateCreated`)
+    $query = 'INSERT INTO powerBank 
+                  (`powerBankCategoryID`, `powerBankCode`, `powerBankName`, `description`, `mah`, `price`, `dateCreated`)
               VALUES
-                 (:category_id, :code, :name, :desc, :price, NOW())'; 
+                 (:category_id, :code, :name, :desc, :mah, :price, NOW())'; 
     $statement = $db->prepare($query);
     
     $statement->bindValue(':category_id', $category_id);
     $statement->bindValue(':code', $code);
     $statement->bindValue(':name', $name);
     $statement->bindValue(':desc', $desc);
+    $statement->bindValue(':mah', $mah);
     $statement->bindValue(':price', $price);
     $success = $statement->execute();
     $statement->closeCursor();
@@ -86,12 +94,28 @@ elseif ($price == NULL || $price == FALSE)
         <!-- header -->
         <header>
             <img id="logo" src="images/logo.png"><h3>Portable Power Bank Central</h3>
-            <ul class="menu">
-                <a href="powerbankhome.html">Home</a>
+            <nav class="menu">
+                <a href="powerbankhome.php">Home</a>
                 <a href="powerbankproducts.php">Products</a>
-                <a href="powerbankship.html">Shipping</a>
+                <?php 
+                    if (isset($_SESSION['is_valid_admin'])==false){
+                        session_start();
+                    }
+                    if (isset($_SESSION['is_valid_admin'])) { 
+                ?>
+                <a href="powerbankshipper.php">Shipping</a>
                 <a href="powerbankSql.php">Create</a>
-            </ul>
+                <a href="logout.php">Logout</a>
+                <p><a>
+                    <?php
+                        require_once('userData.php');
+                        userData();
+                    ?>
+                </a></p>
+                <?php } else { ?>
+                <a href="login.php">Login</a>
+                <?php } ?>              
+            </nav>
         </header>
         <!-- main elements -->
         <main>

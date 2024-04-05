@@ -1,7 +1,10 @@
-<?php
-$error = "Duplicate code.";
-        echo "$error <br>";
+<?php 
+if (!isset($login_message)) {
+  $login_message = 'You must login to view this page.';
+}
 ?>
+<!DOCTYPE html>
+<html>
 <html>
     <head>
         <title>Portable Power Banks</title>
@@ -36,7 +39,17 @@ $error = "Duplicate code.";
         </header>
         <!-- main elements -->
         <main>
-        <p><a href="powerbankproducts.php">View Product List</a></p>
+        <h1>Login</h1>
+          <form action="authenticate.php" method="post">
+            <label>Email:</label>
+            <input type="text" name="email" value="">
+            <br>
+            <label>Password:</label>
+            <input type="password" name="password" value="">
+            <br>
+            <input type="submit" value="Login">
+          </form>
+          <p><?php echo $login_message; ?></p>
         </main>
         <hr>
         <hr>

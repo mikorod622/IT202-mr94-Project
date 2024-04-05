@@ -1,16 +1,52 @@
 <?php
-// TODO Use database_local.php OR database_njit.php
-require_once('database_local.php');
-$db = getDB();
-$query = 'SELECT *
-          FROM powerBankCategories
-          ORDER BY powerbankCategoryID';
-$statement = $db->prepare($query);
-$statement->execute();
-$categories = $statement->fetchAll();
-$statement->closeCursor();
-?>
+  // DEBUGGING ONLY
+  // echo "<pre>";
+  // print_r($_POST);
+  // echo "</pre>";
+  // DEBUGGING ONLY
 
+// Get the product data
+$first = filter_input(INPUT_POST, 'first');
+$last = filter_input(INPUT_POST, 'last');
+$email = filter_input(INPUT_POST, 'email');
+$password = filter_input(INPUT_POST, 'password');
+
+
+// Validate inputs
+function addpowerBankmanager($first, $last, $email, $password) {
+  
+  if ($first == NULL)
+  {
+    $error = "Invalid first name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  elseif ($last == NULL)
+  {
+    $error = "Invalid last name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  elseif ($email == NULL)
+  {
+    $error = "Invalid last name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  require_once('database_local.php');
+  $db = getDB();
+  $hash = password_hash($password, PASSWORD_DEFAULT);
+  $query = 'INSERT INTO powerBankManagers (firstName, lastName, emailAddress, password, dateCreated)
+            VALUES (:first, :last, :email, :password, NOW())';
+  $statement = $db->prepare($query);
+  $statement->bindValue(':first', $first);
+  $statement->bindValue(':last', $last);
+  $statement->bindValue(':email', $email);
+  $statement->bindValue(':password', $hash);
+  $statement->execute();
+  $statement->closeCursor();
+
+  echo "<p>Added Successfully</p>";
+}
+addpowerBankmanager($first, $last, $email, $password);
+?>
 <html>
     <head>
         <title>Portable Power Banks</title>
@@ -45,36 +81,6 @@ $statement->closeCursor();
         </header>
         <!-- main elements -->
         <main>
-        <h1>Add Product</h1>
-        <form action="add_product.php" method="post"
-              id="add_product_form">
-
-            <label>Category:</label>
-            <select id="choose" name="category_id">
-            <?php foreach ($categories as $category) : ?>
-                <option value="<?php echo $category['powerBankCategoryID']; ?>">
-                    <?php echo $category['powerBankCategoryName']; ?>
-                </option>
-            <?php endforeach; ?>
-            </select>
-            <br>
-            <label>Code:</label>
-            <input type="text" name="code"><br>
-
-            <label>Name:</label>
-            <input type="text" name="name"><br>
-
-            <label>Description:</label>
-            <input type="text" name="desc"><br>
-
-            <label>Mah:</label>
-            <input type="text" name="mah"><br>
-
-            <label>List Price:</label>
-            <input type="text" name="price"><br>
-
-            <input type="submit" value="Add Product"><br>
-        </form>
         <p><a href="powerbankproducts.php">View Product List</a></p>
         </main>
         <hr>

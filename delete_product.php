@@ -7,6 +7,7 @@
   $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
 
   if($product_id != FALSE && $category_id != FALSE) {
+    $db = getDB();
     $query = 'DELETE FROM powerBank WHERE powerBankID = :product_id';
     // 4 step: prepare, bindValue, execute, closeCursor
     $statement = $db->prepare($query);
@@ -31,12 +32,28 @@
         <!-- header -->
         <header>
             <img id="logo" src="images/logo.png"><h3>Portable Power Bank Central</h3>
-            <ul class="menu">
-                <a href="powerbankhome.html">Home</a>
+            <nav class="menu">
+                <a href="powerbankhome.php">Home</a>
                 <a href="powerbankproducts.php">Products</a>
-                <a href="powerbankship.html">Shipping</a>
+                <?php 
+                    if (isset($_SESSION['is_valid_admin'])==false){
+                        session_start();
+                    }
+                    if (isset($_SESSION['is_valid_admin'])) { 
+                ?>
+                <a href="powerbankshipper.php">Shipping</a>
                 <a href="powerbankSql.php">Create</a>
-            </ul>
+                <a href="logout.php">Logout</a>
+                <p><a>
+                    <?php
+                        require_once('userData.php');
+                        userData();
+                    ?>
+                </a></p>
+                <?php } else { ?>
+                <a href="login.php">Login</a>
+                <?php } ?>              
+            </nav>
         </header>
         <!-- main elements -->
         <main>
