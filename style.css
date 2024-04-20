@@ -91,3 +91,35 @@ input {
 #choose {
     color: #1d1d1d;
 }
+input.link {
+    margin: 0;
+    text-align: left;
+    color: rgb(155, 130, 93);
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    text-decoration: underline;
+    cursor: pointer;
+}
+form.link {
+    margin-right: 5px;
+}
+.link :hover {
+    color: aqua;
+}
+
+#img1 {
+    filter: blur(5px)
+}
+
+#img1:hover {
+    filter: brightness(250%);
+}
+
+#img2 {
+    filter: invert(100%);
+}
+
+#img2:hover {
+    filter: contrast(200%);
+}

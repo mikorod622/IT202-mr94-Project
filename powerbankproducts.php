@@ -96,6 +96,7 @@ $statement3->closeCursor();
     <h2><?php echo $category_name; ?></h2>
     <table>
       <tr>
+        <th>Code</th>
         <th>Name</th>
         <th>Description</th>
         <th>Mah</th>
@@ -104,12 +105,22 @@ $statement3->closeCursor();
 
       <?php foreach ($products as $product) : ?>
       <tr>
+      <td><form class="link" action='product_details.php' method="post">
+        <input class="link" type="submit" id="code" value="<?php echo $product['powerBankCode']; ?>"name="<?php echo $product['powerBankCode']; ?>">
+        <input type="hidden" name="powerBankID" value="<?php echo $product['powerBankID']; ?>" />
+        <input type="hidden" name="powerBankCode" value="<?php echo $product['powerBankCode']; ?>" />
+        <input type="hidden" name="powerBankCategoryID" value="<?php echo $category['powerBankCategoryName']; ?>" />
+        <input type="hidden" name="powerBankName" value="<?php echo $product['powerBankName']; ?>" />
+        <input type="hidden" name="description" value="<?php echo $product['description']; ?>" />
+        <input type="hidden" name="mah" value="<?php echo $product['mah']; ?>" />
+        <input type="hidden" name="price" value="<?php echo $product['price']; ?>" />
+        </form></td>
         <td><?php echo $product['powerBankName']; ?></td>
         <td><?php echo $product['description']; ?></td>
         <td><?php echo $product['mah']; ?></td>
         <td><?php echo $product['price']; ?></td>
         <td>
-          <form action="delete_product.php" method="post">
+          <form action='delete_product.php' method="post">
             <input type="hidden" name="product_id"
               value="<?php echo $product['powerBankID']; ?>" />
             <input type="hidden" name="category_id"
@@ -118,7 +129,7 @@ $statement3->closeCursor();
                   if (isset($_SESSION['is_valid_admin'])) { 
             ?>
             <p>
-                <input type="submit" value="Delete" />
+                <input onclick="const confirmDelete = confirm('Are you sure?'); if (confirmDelete == false) { action='powerbankproducts.php';}" type="submit" value="Delete" />
             </p>
             <?php }?>
           </form>

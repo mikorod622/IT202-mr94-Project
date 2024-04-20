@@ -1,32 +1,18 @@
 <?php
-  // Slide 37
-  // use database_local.php OR database_njit.php
-  require_once('database_local.php');
-    
-  $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
-  $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+$code = filter_input(INPUT_POST, 'powerBankCode');
+$ID = filter_input(INPUT_POST, 'powerBankID');
+$categoryID = filter_input(INPUT_POST, 'powerBankCategoryID');
+$name = filter_input(INPUT_POST, 'powerBankName');
+$desc = filter_input(INPUT_POST, 'description');
+$mah = filter_input(INPUT_POST, 'mah');
+$price = filter_input(INPUT_POST, 'price');
 
-  if($product_id != FALSE && $category_id != FALSE) {
-    $db = getDB();
-    $query = 'DELETE FROM powerBank WHERE powerBankID = :product_id';
-    // 4 step: prepare, bindValue, execute, closeCursor
-    $statement = $db->prepare($query);
-    $statement->bindValue(':product_id', $product_id);
-    $success = $statement->execute();
-    $statement->closeCursor();
-    if ($success == 1){
-      echo "<p>Deleted Successfully</p>";
-    }
-    else{
-      echo "<p>Delete Error</p>";
-    }
-    
-  }
 ?>
+
 <html>
     <head>
         <title>Portable Power Banks</title>
-        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="style.css" href="?product_id=<?php $code?>"/>
     </head>
     <body>
         <!-- header -->
@@ -57,7 +43,24 @@
         </header>
         <!-- main elements -->
         <main>
+        <img src="images/<?php echo $code; ?>.png" alt="error finding image" id="img1">
+        <img src="images/<?php echo $code; ?>.png" alt="error finding image" id="img2">
+        <hr>
+        <hr>
+        <?php echo $categoryID; ?>
+        <hr>
+        <?php echo $name; ?>
+        <hr>
+        <?php echo $desc; ?>
+        <hr>
+        <?php echo $mah; ?>
+        <?php echo "mah"; ?>
+        <hr>
+        <?php echo "$"; ?>
+        <?php echo $price; ?>
+
         <p><a href="powerbankproducts.php">View Product List</a></p>
+
         </main>
         <hr>
         <hr>
