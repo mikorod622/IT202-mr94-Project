@@ -65,7 +65,7 @@ addpowerBankmanager($first, $last, $email, $password);
                     }
                     if (isset($_SESSION['is_valid_admin'])) { 
                 ?>
-                <a href="powerbankshipper.php">Shipping</a>
+                
                 <a href="powerbankSql.php">Create</a>
                 <a href="logout.php">Logout</a>
                 <p><a>

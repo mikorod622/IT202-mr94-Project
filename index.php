@@ -16,7 +16,7 @@
                     }
                     if (isset($_SESSION['is_valid_admin'])) { 
                 ?>
-                <a href="powerbankshipper.php">Shipping</a>
+                
                 <a href="powerbankSql.php">Create</a>
                 <a href="logout.php">Logout</a>
                 <p><a>
@@ -33,8 +33,8 @@
         <!-- main elements -->
         <main>
             <hr>
-            <p id="title">What do we do?</p>
-            <p id="textbox">We are a proud seller of many types of Power Banks. Our end goal is to deliver a professional experience for all seeking portable power. From solar powered to wireless charging, we have everything you'll need. Our banks also come in different sizes and capacities.</p>
+            <p id="title">Homepage</p>
+            <p id="textbox">This is an app used to store inventory of power banks</p>
             <hr>
             <p id="title">High-Capacity Power Bank</p>
             <figure id="product"><img src="images/big.png" alt="High-Capacity Power Bank"><figcaption>This is our high-capacity power bank</figcaption></figure>
