@@ -1,3 +1,52 @@
+<?php
+  // DEBUGGING ONLY
+  // echo "<pre>";
+  // print_r($_POST);
+  // echo "</pre>";
+  // DEBUGGING ONLY
+
+// Get the product data
+$first = filter_input(INPUT_POST, 'first');
+$last = filter_input(INPUT_POST, 'last');
+$email = filter_input(INPUT_POST, 'email');
+$password = filter_input(INPUT_POST, 'password');
+
+
+// Validate inputs
+function addpowerBankmanager($first, $last, $email, $password) {
+  
+  if ($first == NULL)
+  {
+    $error = "Invalid first name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  elseif ($last == NULL)
+  {
+    $error = "Invalid last name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  elseif ($email == NULL)
+  {
+    $error = "Invalid last name. Check all fields and try again.";
+    echo "$error <br>";
+  }
+  require_once('database_local.php');
+  $db = getDB();
+  $hash = password_hash($password, PASSWORD_DEFAULT);
+  $query = 'INSERT INTO powerBankManagers (firstName, lastName, emailAddress, password, dateCreated)
+            VALUES (:first, :last, :email, :password, NOW())';
+  $statement = $db->prepare($query);
+  $statement->bindValue(':first', $first);
+  $statement->bindValue(':last', $last);
+  $statement->bindValue(':email', $email);
+  $statement->bindValue(':password', $hash);
+  $statement->execute();
+  $statement->closeCursor();
+
+  echo "<p>Added Successfully</p>";
+}
+addpowerBankmanager($first, $last, $email, $password);
+?>
 <html>
     <head>
         <title>Portable Power Banks</title>
@@ -32,31 +81,10 @@
         </header>
         <!-- main elements -->
         <main>
-            <hr>
-            <p id="title">Homepage</p>
-            <p id="textbox">This is an app used to store inventory of power banks</p>
-            <hr>
-            <p id="title">High-Capacity Power Bank</p>
-            <figure id="product"><img src="images/big.png" alt="High-Capacity Power Bank"><figcaption>This is our high-capacity power bank</figcaption></figure>
-            <hr>
-            <hr>
-            <p id="title">Solar-Powered Charger</p>
-            <figure id="product"><img src="images/solar.png" alt="Solar-Powered Charger"><figcaption>This is our solar-powered charger</figcaption></figure>
-            <hr>
-            <hr>
-            <p id="title">Slim Portable Charger</p>
-            <figure id="product"><img src="images/slim.png" alt="Slim Portable Charger"><figcaption>This is our Slim Portable Charger</figcaption></figure>
-            <hr>
-            <hr>
-            <p id="title">Fast Charging Power Bank</p>
-            <figure id="product"><img src="images/fast.png" alt="Fast Charging Power Bank"><figcaption>This is our Fast Charging Power Bank</figcaption></figure>
-            <hr>
-            <hr>
-            <p id="title">Wireless Charging Power Bank</p>
-            <figure id="product"><img src="images/wireless.png" alt="Wireless Charging Power Bank"><figcaption>This is our Wireless Charging Power Bank</figcaption></figure>
-            <hr>
-            <hr>
+        <p><a href="powerbankproducts.php">View Product List</a></p>
         </main>
+        <hr>
+        <hr>
         <footer>Michael Anthony Rodriguez, Feb 16, 2024, IT-202-006, mr94@njit.edu</footer>
         <hr>
     </body>
