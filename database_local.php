@@ -2,9 +2,9 @@
   // MODIFY LINE 3
   function getDB() {
     // Chapter 4 Slide 24
-    $dsn = 'mysql:host=us-cluster-east-01.k8s.cleardb.net;port=3306;dbname=heroku_8bd50de2c212c9a';
-    $username = 'baeeaebcd79dab';
-    $password = 'e658e786';
+    $dsn = 'mysql:host=us-cluster-east-01.k8s.cleardb.net;port=3306;dbname=heroku_wckauxxx5t8yb9p5';
+    $username = 'wj5myz4787qfnjp9';
+    $password = 'g07pg3to9f6hbx46';
 
     try {
       $db = new PDO($dsn, $username, $password);
