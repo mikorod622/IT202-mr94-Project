@@ -8,7 +8,7 @@
     $hostname = $dbparts['l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com	'];
     $username = $dbparts['wj5myz4787qfnjp9'];
     $password = $dbparts['g07pg3to9f6hbx46'];
-    $database = ltrim($dbparts['wckauxxx5t8yb9p5'],'/');
+    $database = ltrim($dbparts['Unnamed/wckauxxx5t8yb9p5'],'/');
 
     try {
       $db = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
