@@ -19,7 +19,6 @@
     catch(PDOException $ex)
       {
         $error_message = $ex->getMessage();
-        include('database_error.php');
         exit();
       }
     // MODIFY LINE 18 and 19
